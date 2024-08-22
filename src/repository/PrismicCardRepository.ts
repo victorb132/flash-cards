@@ -2,8 +2,14 @@ import axios from "axios";
 import { CardData, ICardDataRepository } from "./ICardRepository";
 
 export class PrismicCardRepository implements ICardDataRepository {
-  fetchData(): Promise<CardData[] | []> {
-    const response: Promise<CardData[]> = axios.get("https://flash-cards.cdn.prismic.io/api/v2/documents/search?ref=Zr0yFRIAACAAJRxv&access_token=MC5acjA5LUJJQUFDRUFKUzBw.77-9De-_vWXvv70iYe-_ve-_vSkc77-977-9MHTvv73vv70E77-977-977-9J--_vQ1477-9bO-_ve-_ve-_ve-_ve-_vQ").then((res) => {
+  async fetchData(): Promise<CardData[] | []> {
+    const prismicUrl = process.env.EXPO_PUBLIC_PRISMIC_BASE_URL;
+    const prismicReference = process.env.EXPO_PUBLIC_PRISMIC_REFERENCE;
+    const prismicToken = process.env.EXPO_PUBLIC_PRISMIC_TOKEN;
+
+    const url = `${prismicUrl}/documents/search?ref=${prismicReference}&q=%5B%5Bat(document.type%2C%22card%22)%5D%5D&access_token=${prismicToken}`;
+
+    const response: CardData[] = await axios.get(url).then((res) => {
       var cardData: CardData[] = [];
 
       const data = res.data.results.map((item: any) => item.data);

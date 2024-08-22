@@ -9,6 +9,7 @@ import Header from "./header";
 import { CardData, ICardDataRepository } from "../repository/ICardRepository";
 import { MockCardRepository } from "../repository/MockCardRepository";
 import { PrismicCardRepository } from "../repository/PrismicCardRepository";
+import { ContentfulCardRepository } from "../repository/ContentfulCardRepository";
 
 export const FlashCard = () => {
   const scrollViewRef = useRef<ScrollView>(null);
